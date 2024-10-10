@@ -1,6 +1,6 @@
 # Swaybinds
 
-> [!warning] WIP
+> [!WARNING] WIP
 > This is a work in progress, is not yet ready
 
-See your Sway bindings in your terminal
+See your Sway key bindings in your terminal
