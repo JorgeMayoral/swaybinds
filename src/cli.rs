@@ -26,6 +26,10 @@ impl Cli {
             .map(|line| line.strip_prefix("bindsym ").unwrap().to_owned())
             .collect::<Vec<String>>();
 
+        if bindings.is_empty() {
+            return Err(anyhow!("Can't find key bindings in this file."));
+        }
+
         let mut table = Table::new();
         table
             .load_preset(UTF8_FULL)
