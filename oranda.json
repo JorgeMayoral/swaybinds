@@ -1,5 +1,5 @@
 {
   "build": {
-    "path_prefix": "reponame"
+    "path_prefix": "swaybinds"
   }
 }
