@@ -1,8 +1,8 @@
 use std::{fs, path::PathBuf};
 
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use clap::Parser;
-use comfy_table::Table;
+use comfy_table::{presets::UTF8_FULL, ContentArrangement, Table};
 use directories::BaseDirs;
 
 #[derive(Debug, Parser, Clone)]
@@ -27,7 +27,10 @@ impl Cli {
             .collect::<Vec<String>>();
 
         let mut table = Table::new();
-        table.set_header(vec!["Shortcut", "Action"]);
+        table
+            .load_preset(UTF8_FULL)
+            .set_content_arrangement(ContentArrangement::Dynamic)
+            .set_header(vec!["Shortcut", "Action"]);
         for line in bindings {
             let (shortcut, action) = line.split_once(' ').unwrap();
             table.add_row(vec![shortcut, action]);
