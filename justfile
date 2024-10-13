@@ -10,7 +10,7 @@ bump VERSION:
     git add .
     git commit -m "release: version {{VERSION}}"
     git push
-    git tag v{{VERSION}}
+    git tag {{VERSION}}
     git push --tags
 
 # Generate changelog for next version number
