@@ -2,17 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.2.1] - 2024-10-13
-
-### 🐛 Bug Fixes
-
-- Fix justfile
-
 ## [0.2.0] - 2024-10-13
 
 ### 🚀 Features
 
 - Add search action functionality
+
+### 🐛 Bug Fixes
+
+- Fix justfile
 
 ### ⚙️ Miscellaneous Tasks
 
@@ -22,6 +20,7 @@ All notable changes to this project will be documented in this file.
 ### Release
 
 - Version v0.2.0
+- Version vv0.2.1
 
 ## [0.1.0] - 2024-10-11
 
