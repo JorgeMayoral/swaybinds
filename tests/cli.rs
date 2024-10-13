@@ -48,3 +48,26 @@ fn ok_when_key_bindings_custom_config() -> Result<()> {
         .stdout(expected);
     Ok(())
 }
+
+#[test]
+fn ok_when_search_gives_results() -> Result<()> {
+    set_home("keybinds");
+    let expected = std::fs::read_to_string("tests/expected/table_search")?;
+    Command::cargo_bin(PRG_NAME)?
+        .args(vec!["-s", "Example 1"])
+        .assert()
+        .success()
+        .stdout(expected);
+    Ok(())
+}
+
+#[test]
+fn error_when_search_result_empty() -> Result<()> {
+    set_home("keybinds");
+    Command::cargo_bin(PRG_NAME)?
+        .args(vec!["--search", "Doesn't exists"])
+        .assert()
+        .failure()
+        .stderr("Can't find key bindings with that text in the action.\n");
+    Ok(())
+}

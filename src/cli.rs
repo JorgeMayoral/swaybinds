@@ -1,45 +1,36 @@
-use std::{fs, path::PathBuf};
+use std::path::PathBuf;
 
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 use clap::Parser;
-use comfy_table::{presets::UTF8_FULL, ContentArrangement, Table};
 use directories::BaseDirs;
+
+use crate::keybinds::Keybinds;
 
 #[derive(Debug, Parser, Clone)]
 #[command(author, version, about)]
 pub struct Cli {
+    /// Config file path, defaults to $HOME/.config/sway/config
     #[arg(short('c'), long("config"))]
     config_file: Option<PathBuf>,
+    /// Search key bindings with the given text in the action
+    #[arg(short('s'), long("search"))]
+    search: Option<String>,
 }
 
 impl Cli {
-    pub fn run(&self) -> Result<()> {
+    pub fn run(self) -> Result<()> {
         let path = self
             .config_file
             .clone()
             .unwrap_or(BaseDirs::new().unwrap().config_dir().join("sway/config"));
-        let content = fs::read_to_string(path)?;
-        let bindings = content
-            .lines()
-            .map(|line| line.trim().to_owned())
-            .filter(|line| line.starts_with("bindsym"))
-            .map(|line| line.strip_prefix("bindsym ").unwrap().to_owned())
-            .collect::<Vec<String>>();
+        let bindings = Keybinds::try_from(path)?;
+        let bindings = if let Some(search_term) = self.search {
+            bindings.search_action(&search_term)?
+        } else {
+            bindings
+        };
+        bindings.draw_table();
 
-        if bindings.is_empty() {
-            return Err(anyhow!("Can't find key bindings in this file."));
-        }
-
-        let mut table = Table::new();
-        table
-            .load_preset(UTF8_FULL)
-            .set_content_arrangement(ContentArrangement::Dynamic)
-            .set_header(vec!["Shortcut", "Action"]);
-        for line in bindings {
-            let (shortcut, action) = line.split_once(' ').unwrap();
-            table.add_row(vec![shortcut, action]);
-        }
-        println!("{table}");
         Ok(())
     }
 }
