@@ -6,7 +6,6 @@ run:
     cargo run -- $(ARGS)
 
 # Bump version
-[confirm("Are you sure you want to bump the version?")]
 bump VERSION:
     git add .
     git commit -m "release: version {{VERSION}}"
