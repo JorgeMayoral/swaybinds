@@ -6,8 +6,8 @@ run:
     cargo run -- $(ARGS)
 
 # Bump version
+[confirm("Are you sure you want to bump the version?")]
 bump VERSION:
-    git cliff --bump
     git add .
     git commit -m "release: version {{VERSION}}"
     git push
@@ -20,9 +20,9 @@ changelog:
 
 # Get next version
 next-version:
-    git cliff --bumped-version
+    @git cliff --bumped-version
 
 # Generate a new release
-release VERSION:
+release:
     @just changelog
-    @just bump {{VERSION}}
+    @just next-version | xargs just bump
