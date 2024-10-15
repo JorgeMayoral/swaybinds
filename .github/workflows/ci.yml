@@ -46,6 +46,7 @@ jobs:
         name: Unit Test
         with:
           command: test
+          args: -- --test-threads 1
 
       - uses: actions-rs/cargo@v1
         name: Format Check
