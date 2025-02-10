@@ -1,6 +1,6 @@
 # Swaybinds
 
 > [!WARNING]
-> This is a work in progress, is not yet ready
+> Unmaintained because I'm not currently using Sway.
 
 See your Sway key bindings in your terminal
